@@ -1,6 +1,6 @@
 # Første verdenskrig – Interaktiv tidslinje og alternativ historie
 
-Dette er en **interaktiv læringsapplikasjon** laget med [Streamlit](https://streamlit.io/) som lar elever utforske Første verdenskrig både gjennom en tidslinje og et kart over slagmarker. Appen inkluderer muligheten for å ta **historiske beslutninger** og se hvordan alternative valg påvirker videre hendelser.
+Dette prosjektet er en **interaktiv læringsapplikasjon** laget med [Streamlit](https://streamlit.io/) som lar elever utforske Første verdenskrig både gjennom en tidslinje og et kart over slagmarker. Appen inkluderer muligheten for å ta **historiske beslutninger** og se hvordan alternative valg påvirker videre hendelser.
 
 ---
 
