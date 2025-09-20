@@ -1,36 +1,36 @@
 {
   "Verdun": {
-    "År": 1916,
+    "\u00C5r": 1916,
     "Lat": 49.159,
     "Lon": 5.384,
     "Faktisk": "Frankrike forsvarte Verdun.",
     "Valg": {
       "Forsvar": {"Beskrivelse": "Frankrike holder linjen."},
-      "Tilbaketrekning": {"Beskrivelse": "Frankrike trekker seg tilbake, Tyskland får overtak."}
+      "Tilbaketrekning": {"Beskrivelse": "Frankrike trekker seg tilbake, Tyskland f\u00E5r overtak."}
     }
   },
   "Somme": {
-    "År": 1916,
+    "\u00C5r": 1916,
     "Lat": 50.020,
     "Lon": 2.650,
     "Faktisk": "Store tap for britene.",
     "Valg": {
       "Frontalangrep": {"Beskrivelse": "Store tap, liten framgang."},
-      "Utsette angrep": {"Beskrivelse": "Tyskland får tid til å styrke linjene."}
+      "Utsette angrep": {"Beskrivelse": "Tyskland f\u00E5r tid til \u00E5 styrke linjene."}
     }
   },
   "Gallipoli": {
-    "År": 1915,
+    "\u00C5r": 1915,
     "Lat": 40.000,
     "Lon": 26.000,
-    "Faktisk": "Allierte styrker mislyktes i å ta Dardanellene.",
+    "Faktisk": "Allierte styrker mislyktes i \u00E5 ta Dardanellene.",
     "Valg": {
-      "Fortsett angrep": {"Beskrivelse": "Store tap, men press på Tyrkia øker."},
+      "Fortsett angrep": {"Beskrivelse": "Store tap, men press p\u00E5 Tyrkia øker."},
       "Trekk tilbake": {"Beskrivelse": "Bevarer styrker, men strategisk tap."}
     }
   },
   "Tannenberg": {
-    "År": 1914,
+    "\u00C5r": 1914,
     "Lat": 53.866,
     "Lon": 20.533,
     "Faktisk": "Tyskland beseiret Russland.",
@@ -40,17 +40,17 @@
     }
   },
   "Jutland": {
-    "År": 1916,
+    "\u00C5r": 1916,
     "Lat": 56.950,
     "Lon": 7.667,
-    "Faktisk": "Store tap på begge sider, ingen klar seier.",
+    "Faktisk": "Store tap p\u00E5 begge sider, ingen klar seier.",
     "Valg": {
       "Angrip umiddelbart": {"Beskrivelse": "Stor risiko, potensielt avgjørende seier."},
       "Hold posisjon": {"Beskrivelse": "Sikker, men uendret situasjon."}
     }
   },
   "Ypres": {
-    "År": 1915,
+    "\u00C5r": 1915,
     "Lat": 50.850,
     "Lon": 2.883,
     "Faktisk": "Kjemisk krigføring introdusert, store tap.",
@@ -60,10 +60,10 @@
     }
   },
   "Caporetto": {
-    "År": 1917,
+    "\u00C5r": 1917,
     "Lat": 46.016,
     "Lon": 12.566,
-    "Faktisk": "Italienske styrker ble slått tilbake kraftig.",
+    "Faktisk": "Italienske styrker ble sl\u00E5tt tilbake kraftig.",
     "Valg": {
       "Fremrykk": {"Beskrivelse": "Stor risiko, kan vinne tilbake terreng."},
       "Trekk tilbake": {"Beskrivelse": "Bevarer styrker, men mister terreng."}
