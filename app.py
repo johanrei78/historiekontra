@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep 20 13:42:52 2025
-
-@author: johvik
-"""
-
 import streamlit as st
 import pydeck as pdk
 import pandas as pd
@@ -91,9 +84,7 @@ historisk_kartpunkter = []
 alternativ_kartpunkter = []
 
 for slag_navn, data in slag.items():
-    # legg alltid inn historiske kartpunkter
     historisk_kartpunkter.append(data["Historisk_kart"])
-
     if slag_navn in st.session_state.valg:
         valgt = st.session_state.valg[slag_navn]
         konsekvenser = data["Valg"][valgt]["Effekter"]
@@ -108,11 +99,7 @@ st.subheader("Utforsk tidslinjen")
 år_valg = st.slider("Velg år", min_value=1914, max_value=1918, step=1)
 år_str = str(år_valg)
 
-if år_str in alternativ_tidslinje:
-    hendelse = alternativ_tidslinje[år_str]
-else:
-    hendelse = tidslinje_original[år_str]
-
+hendelse = alternativ_tidslinje.get(år_str, tidslinje_original[år_str])
 st.subheader(f"{år_valg}: {hendelse['Hendelse']}")
 st.write("**Beskrivelse:**", hendelse["Beskrivelse"])
 st.write("**Konsekvens:**", hendelse["Konsekvens"])
@@ -127,14 +114,13 @@ with col1:
         "ScatterplotLayer",
         data=df_hist,
         get_position='[Lon, Lat]',
-        get_color='[0, 100, 200, 160]',  # blå = historisk
+        get_color='[0, 100, 200, 160]',  # blå
         get_radius=60000,
         pickable=True
     )
     tooltip = {"html": "<b>{Navn}</b><br/>Kontroll: {Kontroll}"}
     view_state = pdk.ViewState(latitude=df_hist["Lat"].mean(), longitude=df_hist["Lon"].mean(), zoom=4)
-    r = pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip=tooltip)
-    st.pydeck_chart(r)
+    st.pydeck_chart(pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip=tooltip))
 
 with col2:
     st.markdown("### Alternativt kart")
@@ -143,11 +129,10 @@ with col2:
         "ScatterplotLayer",
         data=df_alt,
         get_position='[Lon, Lat]',
-        get_color='[200, 30, 0, 160]',  # rød = alternativ
+        get_color='[200, 30, 0, 160]',  # rød
         get_radius=60000,
         pickable=True
     )
     tooltip_alt = {"html": "<b>{Navn}</b><br/>Kontroll: {Kontroll}"}
     view_state_alt = pdk.ViewState(latitude=df_alt["Lat"].mean(), longitude=df_alt["Lon"].mean(), zoom=4)
-    r_alt = pdk.Deck(layers=[layer_alt], initial_view_state=view_state_alt, tooltip=tooltip_alt)
-    st.pydeck_chart(r_alt)
+    st.pydeck_chart(pdk.Deck(layers=[layer_alt], initial_view_state=view_state_alt, tooltip=tooltip_alt))
