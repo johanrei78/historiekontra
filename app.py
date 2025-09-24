@@ -1,113 +1,144 @@
 # -*- coding: utf-8 -*-
+"""
+WW1 – Historisk vs alternativt scenario
+"""
 import streamlit as st
 import pandas as pd
 import pydeck as pdk
 import json
+import copy
 
-st.set_page_config(page_title="WW1 – Interaktiv historiekart", layout="wide")
-st.title("Første verdenskrig – Historisk vs alternativt scenario")
+st.set_page_config(page_title="WW1 – Historisk vs alternativt", layout="wide")
+st.title("Første verdenskrig – Historisk vs alternativ utvikling")
 
-# --- Last inn slagdata ---
+# --- Last inn slagdata fra JSON ---
 try:
     with open("data/slag.json", encoding="utf-8") as f:
         slag = json.load(f)
 except FileNotFoundError:
-    st.error("Finner ikke 'data/slag.json'. Legg filen i /data/ og redeploy.")
+    st.error("Finner ikke 'data/slag.json'. Legg filen i /data/ og kjør appen på nytt.")
     st.stop()
 
-# --- Session state ---
+# --- Original tidslinje (grunnlag) ---
+tidslinje_original = {
+    "1914": {"Hendelse": "Skuddene i Sarajevo", 
+             "Beskrivelse": "Skuddene mot erkehertug Franz Ferdinand utløste krigen.", 
+             "Konsekvens": "Østerrike-Ungarn erklærer krig mot Serbia."},
+    "1915": {"Hendelse": "Kjemisk krigføring introduseres", 
+             "Beskrivelse": "Giftgass brukes ved Ypres.", 
+             "Konsekvens": "Endrer krigens brutalitet."},
+    "1916": {"Hendelse": "Slagene ved Somme og Verdun", 
+             "Beskrivelse": "To av de blodigste slagene under krigen.", 
+             "Konsekvens": "Store tap på begge sider, liten framgang."},
+    "1917": {"Hendelse": "USA går inn i krigen", 
+             "Beskrivelse": "USA erklærer krig mot Tyskland.", 
+             "Konsekvens": "Forsterker de alliertes styrker betydelig."},
+    "1918": {"Hendelse": "Våpenhvile signeres", 
+             "Beskrivelse": "Tyskland overgir seg og våpenhvilen trer i kraft 11. november.", 
+             "Konsekvens": "Krigen avsluttes, Versaillestraktaten senere i 1919."}
+}
+
+# --- Session state for elevenes valg ---
 if "valg" not in st.session_state:
     st.session_state.valg = {}
-if "valgt_slag" not in st.session_state:
-    st.session_state.valgt_slag = None
 
-# --- Sidebar: år-filter og detaljer ---
-st.sidebar.header("Filter og valg")
-år_min = int(min([data["År"] for data in slag.values()]))
-år_max = int(max([data["År"] for data in slag.values()]))
-år_filter = st.sidebar.slider("Vis slag mellom år", år_min, år_max, (år_min, år_max))
+# --- UI: velg slag og ta beslutning ---
+st.subheader("Beslutningsspill")
+slag_valg = st.selectbox("Velg et slag:", list(slag.keys()))
 
-if st.session_state.valgt_slag:
-    navn = st.session_state.valgt_slag
-    data = slag[navn]
-    st.sidebar.markdown(f"**{navn} ({data['År']})**")
-    st.sidebar.markdown(f"Historisk utfall: {data['Faktisk']}")
-    valg = st.sidebar.radio("Hva ville du gjort?", list(data["Valg"].keys()))
-    if st.sidebar.button("Lagre valg"):
-        st.session_state.valg[navn] = valg
-        st.sidebar.success(f"Valg for {navn} lagret!")
+if slag_valg:
+    data = slag[slag_valg]
+    st.write(f"**{slag_valg} ({data['År']})**")
+    st.write("Faktisk utfall:", data["Faktisk"])
+
+    valg = st.radio("Hva ville du gjort?", list(data["Valg"].keys()))
+
+    if st.button("Lagre mitt valg"):
+        st.session_state.valg[slag_valg] = valg
+        st.success(f"Ditt valg for {slag_valg} er lagret!")
+
+# --- Bygg alternativ tidslinje og kart ---
+alternativ_tidslinje = copy.deepcopy(tidslinje_original)
+historisk_kartpunkter = []
+alternativ_kartpunkter = []
+
+for slag_navn, data in slag.items():
+    # Historiske punkter (alltid)
+    historisk_kartpunkter.append({
+        "Navn": slag_navn,
+        "Lat": data["Lat"],
+        "Lon": data["Lon"],
+        "Scenario": "Historisk"
+    })
+
+    # Elevenes valg -> alternative konsekvenser
+    if slag_navn in st.session_state.valg:
+        valgt = st.session_state.valg[slag_navn]
+        alternativ_kartpunkter.append({
+            "Navn": slag_navn,
+            "Lat": data["Lat"],
+            "Lon": data["Lon"],
+            "Scenario": "Alternativ"
+        })
+        # legg inn evt. nye hendelser
+        if "Effekter" in data["Valg"][valgt]:
+            for år, nytt in data["Valg"][valgt]["Effekter"].items():
+                alternativ_tidslinje[år] = nytt
+    else:
+        alternativ_kartpunkter.append({
+            "Navn": slag_navn,
+            "Lat": data["Lat"],
+            "Lon": data["Lon"],
+            "Scenario": "Historisk"
+        })
+
+# --- Tidslinje med slider ---
+st.subheader("Utforsk tidslinjen")
+år_valg = st.slider("Velg år", min_value=1914, max_value=1918, step=1)
+år_str = str(år_valg)
+
+if år_str in alternativ_tidslinje:
+    hendelse = alternativ_tidslinje[år_str]
 else:
-    st.sidebar.markdown("Klikk på et slag på kartet for å se detaljer her.")
+    hendelse = tidslinje_original.get(år_str, {"Hendelse": "Ingen registrert hendelse", 
+                                               "Beskrivelse": "", 
+                                               "Konsekvens": ""})
 
-# --- Bygg kartpunkter ---
-historisk_kart = []
-alternativ_kart = []
+st.markdown(f"### {år_valg}: {hendelse['Hendelse']}")
+st.write("**Beskrivelse:**", hendelse["Beskrivelse"])
+st.write("**Konsekvens:**", hendelse["Konsekvens"])
 
-for navn, data in slag.items():
-    if år_filter[0] <= data["År"] <= år_filter[1]:
-        historisk_kart.append({
-            "Navn": navn,
-            "Lat": data["Lat"],
-            "Lon": data["Lon"],
-            "Kontroll": "Historisk"
-        })
-        valgt = st.session_state.valg.get(navn)
-        alternativ_kart.append({
-            "Navn": navn,
-            "Lat": data["Lat"],
-            "Lon": data["Lon"],
-            "Kontroll": valgt if valgt else "Historisk"
-        })
+# --- Kartvisning: side om side ---
+col1, col2 = st.columns(2)
 
-# --- Tabs for Tidslinje og Kart ---
-tab1, tab2 = st.tabs(["Tidslinje", "Kart"])
-
-with tab1:
-    st.subheader("Alternativ tidslinje")
-    for navn, data in slag.items():
-        if år_filter[0] <= data["År"] <= år_filter[1]:
-            valgt = st.session_state.valg.get(navn)
-            beskrivelse = data["Valg"][valgt]["Beskrivelse"] if valgt else data["Faktisk"]
-            color = "blue" if not valgt else "red"
-            with st.expander(f"{navn} ({data['År']})"):
-                st.markdown(f"<span style='color:{color}'>{beskrivelse}</span>", unsafe_allow_html=True)
-
-with tab2:
-    st.subheader("Historisk vs alternativt kart")
-    col1, col2 = st.columns(2)
-
-    # --- Historisk kart ---
-    with col1:
-        st.markdown("### Historisk kontroll")
-        df_hist = pd.DataFrame(historisk_kart)
-        layer_hist = pdk.Layer(
-            "IconLayer",
+with col1:
+    st.markdown("### Historisk")
+    df_hist = pd.DataFrame(historisk_kartpunkter)
+    if not df_hist.empty:
+        layer = pdk.Layer(
+            "ScatterplotLayer",
             data=df_hist,
-            get_icon="https://img.icons8.com/ios-filled/50/0000FF/flag.png",
-            get_size=4,
-            size_scale=15,
-            get_position="[Lon, Lat]",
+            get_position='[Lon, Lat]',
+            get_color='[0, 100, 200, 160]',  # blå = historisk
+            get_radius=60000,
             pickable=True
         )
-        view_state_hist = pdk.ViewState(latitude=df_hist["Lat"].mean(), longitude=df_hist["Lon"].mean(), zoom=4)
-        st.pydeck_chart(pdk.Deck(layers=[layer_hist], initial_view_state=view_state_hist,
-                                 tooltip={"html": "<b>{Navn}</b><br/>Kontroll: {Kontroll}"}))
+        tooltip = {"html": "<b>{Navn}</b><br/>Scenario: {Scenario}"}
+        view_state = pdk.ViewState(latitude=df_hist["Lat"].mean(), longitude=df_hist["Lon"].mean(), zoom=4)
+        st.pydeck_chart(pdk.Deck(layers=[layer], initial_view_state=view_state, tooltip=tooltip))
 
-    # --- Alternativt kart ---
-    with col2:
-        st.markdown("### Alternativ kontroll")
-        df_alt = pd.DataFrame(alternativ_kart)
+with col2:
+    st.markdown("### Alternativ")
+    df_alt = pd.DataFrame(alternativ_kartpunkter)
+    if not df_alt.empty:
         layer_alt = pdk.Layer(
-            "IconLayer",
+            "ScatterplotLayer",
             data=df_alt,
-            get_icon="https://img.icons8.com/ios-filled/50/FF0000/flag.png",
-            get_size=4,
-            size_scale=15,
-            get_position="[Lon, Lat]",
+            get_position='[Lon, Lat]',
+            get_color='[200, 30, 0, 160]',  # rød = alternativ
+            get_radius=60000,
             pickable=True
         )
+        tooltip_alt = {"html": "<b>{Navn}</b><br/>Scenario: {Scenario}"}
         view_state_alt = pdk.ViewState(latitude=df_alt["Lat"].mean(), longitude=df_alt["Lon"].mean(), zoom=4)
-        st.pydeck_chart(pdk.Deck(layers=[layer_alt], initial_view_state=view_state_alt,
-                                 tooltip={"html": "<b>{Navn}</b><br/>Kontroll: {Kontroll}"}))
-
-st.info("Klikk på et flagg på kartet for å vise detaljer i sidebar. Tidslinjen og alternativt kart oppdateres etter valg.")
+        st.pydeck_chart(pdk.Deck(layers=[layer_alt], initial_view_state=view_state_alt, tooltip=tooltip_alt))
