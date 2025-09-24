@@ -1,72 +1,191 @@
 {
   "Verdun": {
-    "\u00C5r": 1916,
+    "År": 1916,
     "Lat": 49.159,
     "Lon": 5.384,
     "Faktisk": "Frankrike forsvarte Verdun.",
     "Valg": {
-      "Forsvar": {"Beskrivelse": "Frankrike holder linjen."},
-      "Tilbaketrekning": {"Beskrivelse": "Frankrike trekker seg tilbake, Tyskland f\u00E5r overtak."}
+      "Forsvar": {
+        "Beskrivelse": "Frankrike holder linjen – store tap, men stopper tyskerne.",
+        "Effekter": {}
+      },
+      "Tilbaketrekning": {
+        "Beskrivelse": "Frankrike mister Verdun, Tyskland får et strategisk overtak.",
+        "Effekter": {
+          "1917": {
+            "Hendelse": "USA nøler med å gå inn i krigen",
+            "Beskrivelse": "Tysk styrke etter Verdun-seieren gjør USA mer forsiktige.",
+            "Konsekvens": "Amerikansk inntreden utsettes eller uteblir."
+          },
+          "1918": {
+            "Hendelse": "Tyskland forhandler fra en sterk posisjon",
+            "Beskrivelse": "Med Verdun i tysk kontroll og ingen amerikansk intervensjon, står Tyskland sterkere i forhandlinger.",
+            "Konsekvens": "Krigen kan avsluttes på tysk-vennlige vilkår."
+          }
+        }
+      }
     }
   },
   "Somme": {
-    "\u00C5r": 1916,
+    "År": 1916,
     "Lat": 50.020,
     "Lon": 2.650,
     "Faktisk": "Store tap for britene.",
     "Valg": {
-      "Frontalangrep": {"Beskrivelse": "Store tap, liten framgang."},
-      "Utsette angrep": {"Beskrivelse": "Tyskland f\u00E5r tid til \u00E5 styrke linjene."}
+      "Frontalangrep": {
+        "Beskrivelse": "Store tap, liten framgang.",
+        "Effekter": {}
+      },
+      "Utsette angrep": {
+        "Beskrivelse": "Tyskland får tid til å styrke linjene.",
+        "Effekter": {
+          "1917": {
+            "Hendelse": "Tyskland dominerer vestfronten",
+            "Beskrivelse": "Britisk nøling gir tyskerne styrke, og de allierte presses bakover.",
+            "Konsekvens": "Stor risiko for at de allierte mister moral og støtte."
+          }
+        }
+      }
     }
   },
   "Gallipoli": {
-    "\u00C5r": 1915,
-    "Lat": 40.000,
-    "Lon": 26.000,
-    "Faktisk": "Allierte styrker mislyktes i \u00E5 ta Dardanellene.",
+    "År": 1915,
+    "Lat": 40.367,
+    "Lon": 26.425,
+    "Faktisk": "Allierte mislyktes i å ta kontroll over Dardanellene.",
     "Valg": {
-      "Fortsett angrep": {"Beskrivelse": "Store tap, men press p\u00E5 Tyrkia øker."},
-      "Trekk tilbake": {"Beskrivelse": "Bevarer styrker, men strategisk tap."}
-    }
-  },
-  "Tannenberg": {
-    "\u00C5r": 1914,
-    "Lat": 53.866,
-    "Lon": 20.533,
-    "Faktisk": "Tyskland beseiret Russland.",
-    "Valg": {
-      "Aggressivt press": {"Beskrivelse": "Rask seier, Russland svekkes mer."},
-      "Forsiktig manøver": {"Beskrivelse": "Lenger kamp, mindre tap men mindre framgang."}
+      "Fortsette offensiven": {
+        "Beskrivelse": "Allierte satser mer på operasjonen.",
+        "Effekter": {
+          "1915": {
+            "Hendelse": "Allierte kontrollerer Dardanellene",
+            "Beskrivelse": "Tyrkia mister en nøkkelposisjon.",
+            "Konsekvens": "Russland får bedre forsyningslinjer."
+          }
+        }
+      },
+      "Evakuere tidlig": {
+        "Beskrivelse": "Tapene begrenses ved rask tilbaketrekning.",
+        "Effekter": {
+          "1915": {
+            "Hendelse": "Allierte unngår store tap",
+            "Beskrivelse": "Tidlig evakuering redder mange liv.",
+            "Konsekvens": "Større alliert moral, men Tyrkia står sterkt."
+          }
+        }
+      }
     }
   },
   "Jutland": {
-    "\u00C5r": 1916,
-    "Lat": 56.950,
-    "Lon": 7.667,
-    "Faktisk": "Store tap p\u00E5 begge sider, ingen klar seier.",
+    "År": 1916,
+    "Lat": 56.700,
+    "Lon": 5.700,
+    "Faktisk": "Britene beholdt kontrollen til sjøs.",
     "Valg": {
-      "Angrip umiddelbart": {"Beskrivelse": "Stor risiko, potensielt avgjørende seier."},
-      "Hold posisjon": {"Beskrivelse": "Sikker, men uendret situasjon."}
+      "Aggressivt angrep": {
+        "Beskrivelse": "Britene presser hardere på i sjøslaget.",
+        "Effekter": {
+          "1916": {
+            "Hendelse": "Tysk flåte ødelagt",
+            "Beskrivelse": "En avgjørende seier til sjøs.",
+            "Konsekvens": "Allierte beholder ubestridt sjøkontroll."
+          }
+        }
+      },
+      "Forsiktig strategi": {
+        "Beskrivelse": "Britene unngår risiko og trekker seg tilbake.",
+        "Effekter": {
+          "1916": {
+            "Hendelse": "Tysk flåte får mer handlingsrom",
+            "Beskrivelse": "Britisk nøling gir tyskerne pusterom.",
+            "Konsekvens": "Ubåtkrigen kan styrkes."
+          }
+        }
+      }
     }
   },
   "Ypres": {
-    "\u00C5r": 1915,
-    "Lat": 50.850,
-    "Lon": 2.883,
-    "Faktisk": "Kjemisk krigføring introdusert, store tap.",
+    "År": 1917,
+    "Lat": 50.851,
+    "Lon": 2.885,
+    "Faktisk": "Store tap uten avgjørende seier.",
     "Valg": {
-      "Fortsett offensiv": {"Beskrivelse": "Kan ta terreng, men høye tap."},
-      "Stopp offensiv": {"Beskrivelse": "Reduserer tap, taper terreng."}
+      "Full offensiv": {
+        "Beskrivelse": "Britene kaster alt inn i kampene.",
+        "Effekter": {
+          "1917": {
+            "Hendelse": "Gjennombrudd ved vestfronten",
+            "Beskrivelse": "Tyskerne presses tilbake.",
+            "Konsekvens": "Krigen kan avsluttes raskere."
+          }
+        }
+      },
+      "Avbryte offensiven": {
+        "Beskrivelse": "Unngå store tap ved å stoppe tidlig.",
+        "Effekter": {
+          "1917": {
+            "Hendelse": "Britene bevarer styrker",
+            "Beskrivelse": "Mindre tap gjør at flere soldater spares.",
+            "Konsekvens": "Bedre forberedelser til 1918."
+          }
+        }
+      }
     }
   },
   "Caporetto": {
-    "\u00C5r": 1917,
-    "Lat": 46.016,
-    "Lon": 12.566,
-    "Faktisk": "Italienske styrker ble sl\u00E5tt tilbake kraftig.",
+    "År": 1917,
+    "Lat": 46.250,
+    "Lon": 13.583,
+    "Faktisk": "Italia led et stort nederlag.",
     "Valg": {
-      "Fremrykk": {"Beskrivelse": "Stor risiko, kan vinne tilbake terreng."},
-      "Trekk tilbake": {"Beskrivelse": "Bevarer styrker, men mister terreng."}
+      "Styrke forsvar": {
+        "Beskrivelse": "Italia forbereder seg bedre.",
+        "Effekter": {
+          "1917": {
+            "Hendelse": "Italia holder linjen",
+            "Beskrivelse": "Tysk-østerrikske styrker stoppes.",
+            "Konsekvens": "Italia forblir en sterkere alliert."
+          }
+        }
+      },
+      "Tilbaketrekning": {
+        "Beskrivelse": "Italia trekker seg bakover tidlig.",
+        "Effekter": {
+          "1917": {
+            "Hendelse": "Italia mister store områder",
+            "Beskrivelse": "Nederlag fører til kaos.",
+            "Konsekvens": "Italia kan falle ut av krigen."
+          }
+        }
+      }
+    }
+  },
+  "Tannenberg": {
+    "År": 1914,
+    "Lat": 53.494,
+    "Lon": 20.096,
+    "Faktisk": "Russland led et katastrofalt nederlag.",
+    "Valg": {
+      "Koordinert offensiv": {
+        "Beskrivelse": "Russland koordinerer bedre mellom frontene.",
+        "Effekter": {
+          "1914": {
+            "Hendelse": "Russisk seier ved Tannenberg",
+            "Beskrivelse": "Tyskland presses på østfronten.",
+            "Konsekvens": "Tyskland må trekke styrker fra vestfronten."
+          }
+        }
+      },
+      "Tidlig retrett": {
+        "Beskrivelse": "Russland unngår katastrofen med tilbaketrekning.",
+        "Effekter": {
+          "1914": {
+            "Hendelse": "Russland sparer styrker",
+            "Beskrivelse": "Mindre tap gir sterkere forsvar.",
+            "Konsekvens": "Krigen drar ut på østfronten."
+          }
+        }
+      }
     }
   }
 }
